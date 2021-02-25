@@ -7,16 +7,36 @@ const {
   GraphQLSchema,
   GraphQLID,
   GraphQLInt,
+  GraphQLList,
 } = graphql;
 
 // Dummy Data
 var books = [
-  { name: "Think and Grow Rich", genre: "Inspirational", id: "1" },
-  { name: "Lord of the Rings", genre: "Fantasy", id: "2" },
+  {
+    name: "Think and Grow Rich",
+    genre: "Inspirational",
+    id: "1",
+    authorId: "1",
+  },
+  { name: "Lord of the Rings", genre: "Fantasy", id: "2", authorId: "2" },
   {
     name: "How to Win Friends and Influence People",
     genre: "Inspirational",
     id: "3",
+    authorId: "3",
+  },
+  { name: "The Hobbit", genre: "Fantasy", id: "4", authorId: "2" },
+  {
+    name: "The Art of Public Speaking",
+    genre: "Leadership",
+    id: "5",
+    authorId: "3",
+  },
+  {
+    name: "The Law of Success",
+    genre: "Inspirational",
+    id: "6",
+    authorId: "1",
   },
 ];
 
@@ -32,6 +52,13 @@ const BookType = new GraphQLObjectType({
     id: { type: GraphQLID },
     name: { type: GraphQLString },
     genre: { type: GraphQLString },
+    author: {
+      type: AuthorType,
+      resolve(parent, args) {
+        console.log(parent);
+        return _.find(author, { id: parent.authorId });
+      },
+    },
   }),
 });
 
@@ -41,6 +68,12 @@ const AuthorType = new GraphQLObjectType({
     id: { type: GraphQLID },
     name: { type: GraphQLString },
     age: { type: GraphQLInt },
+    book: {
+      type: new GraphQLList(BookType),
+      resolve(parent, args) {
+        return _.filter(books, { authorId: parent.id });
+      },
+    },
   }),
 });
 
