@@ -5,11 +5,8 @@ const mongoose = require("mongoose");
 
 const app = express();
 
-const username = "jerry_06";
-const password = "nikhil@123";
-
 mongoose.connect(
-  `mongodb+srv://${username}:${password}@cluster0.aaxpv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`,
+  `mongodb+srv://nikhil_007:jerry007@test-cluster.wrhlv.mongodb.net/graphql?retryWrites=true&w=majority`,
   { useNewUrlParser: true, useUnifiedTopology: true }
 );
 
