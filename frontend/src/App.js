@@ -1,8 +1,22 @@
+import React from "react";
+import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+
+import BookList from "./components/BookList";
+
+//apollo client setup
+const client = new ApolloClient({
+  uri: "http://localhost:4000/graphql",
+  cache: new InMemoryCache(),
+});
+
 function App() {
   return (
-    <div className="App">
-      <h1>Hello Bitches!</h1>
-    </div>
+    <ApolloProvider client={client}>
+      <div className="App">
+        <h1>Jerry's Reading List</h1>
+        <BookList />
+      </div>
+    </ApolloProvider>
   );
 }
 
